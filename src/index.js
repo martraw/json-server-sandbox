@@ -1,4 +1,12 @@
-import { http } from "./http";
+import { http } from './http';
+import { ui } from './ui';
 
-http.get('http://localhost:3000/posts')
-  .then(data => console.log(data));
+
+document.addEventListener('DOMContentLoaded', getPosts);
+
+function getPosts(url) {
+  http.get('http://localhost:3000/posts')
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+}
+  
