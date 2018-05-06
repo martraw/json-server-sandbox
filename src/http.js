@@ -15,6 +15,15 @@ class HTTP {
     const responseData = await response.json();
     return responseData;
   }
+
+  async delete(url) {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json'}
+    });
+    const responseData = await 'Post deleted...';
+    return responseData;
+  }
 }
 
 export const http = new HTTP();
