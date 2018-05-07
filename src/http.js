@@ -16,6 +16,16 @@ class HTTP {
     return responseData;
   }
 
+  async put(url, data) {
+    const response = await fetch(url, {
+      headers: 'PUT',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    const responseData = await response;
+    return responseData;
+  }
+
   async delete(url) {
     const response = await fetch(url, {
       method: 'DELETE',
