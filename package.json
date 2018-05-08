@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --output-public-path=/dist/",
-    "jsonServer": "json-server --watch data/db.json"
+    "jsonServer": "json-server --watch ./data/db.json"
   },
   "keywords": [],
   "author": "",
