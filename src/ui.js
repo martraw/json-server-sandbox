@@ -1,5 +1,6 @@
 class UI {
   constructor() {
+    this.form = document.querySelector('#form')
     this.posts = document.querySelector('#posts'),
     this.titleInput = document.querySelector('#title'),
     this.bodyInput = document.querySelector('#body'),
@@ -32,6 +33,42 @@ class UI {
   clearFormFields() {
     this.titleInput.value = '';
     this.bodyInput.value = '';
+  }
+
+  fillFormFields(data) {
+    this.titleInput.value = data.title;
+    this.bodyInput.value = data.body;
+    this.idInput.value = data.id;
+
+    this.changeFormState('edit');
+  }
+
+  clearIdInput() {
+    this.idInput.value = '';
+  }
+
+  changeFormState(state) {
+    if (state === 'edit') {
+      this.postBtn.textContent = 'Update';
+      this.postBtn.classList = 'btn btn-warning'
+
+      const cancelBtn = document.createElement('button');
+      cancelBtn.textContent = 'Cancel';
+      cancelBtn.classList = 'btn btn-light cancelBtn';
+
+      this.form.insertAdjacentElement('beforeEnd', cancelBtn)
+    } else {
+      this.postBtn.textContent = 'Post it!';
+      this.postBtn.classList = 'btn btn-primary';
+
+      if (this.form.querySelector('.cancelBtn')) {
+        this.form.querySelector('.cancelBtn').remove();
+      }
+
+      this.clearIdInput();
+
+      this.clearFormFields();
+    }
   }
 }
 
