@@ -18,11 +18,12 @@ class HTTP {
 
   async put(url, data) {
     const response = await fetch(url, {
-      headers: 'PUT',
+      method: 'PUT',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(data)
     });
-    const responseData = await response;
+    
+    const responseData = await response.json();
     return responseData;
   }
 
