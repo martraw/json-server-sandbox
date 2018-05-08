@@ -9,8 +9,8 @@ class UI {
     this.formState = 'add'
   }
 
+  // Create card for each post
   showPosts(posts) {
-    
     let content = '';
 
     posts.forEach(post => {
@@ -35,6 +35,7 @@ class UI {
     this.bodyInput.value = '';
   }
 
+  // Fill form with content of edited post
   fillFormFields(data) {
     this.titleInput.value = data.title;
     this.bodyInput.value = data.body;
@@ -47,6 +48,7 @@ class UI {
     this.idInput.value = '';
   }
 
+  // Change form state
   changeFormState(state) {
     if (state === 'edit') {
       this.postBtn.textContent = 'Update';

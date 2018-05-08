@@ -1,7 +1,8 @@
+// Import modules
 import { http } from './http';
 import { ui } from './ui';
 
-
+// Listen for events
 document.addEventListener('DOMContentLoaded', getPosts);
 
 ui.postBtn.addEventListener('click', submitPost);
@@ -10,7 +11,7 @@ ui.posts.addEventListener('click', deletePost);
 
 ui.posts.addEventListener('click', enableEdit);
 
-ui.form.addEventListener('click', cancelEdit)
+ui.form.addEventListener('click', cancelEdit);
 
 
 
@@ -20,6 +21,7 @@ function getPosts(url) {
     .catch(err => console.log(err))
 }
 
+// Create or update post
 function submitPost() {
   const newPost = {
     title: ui.titleInput.value,
@@ -39,7 +41,6 @@ function submitPost() {
         .catch(err => console.log(err));
     } else {
       // Update post
-      console.log(ui.idInput.value);
       http.put(`http://localhost:3000/posts/${ui.idInput.value}`, newPost)
       .then(data => {
         ui.clearFormFields();
@@ -51,6 +52,7 @@ function submitPost() {
   }
 }
 
+// Remove post from db.json
 function deletePost(e) {
   if (e.target.classList.contains('deleteBtn')) {
     const id = e.target.parentElement.querySelector('[data-id]').dataset.id;
@@ -67,6 +69,7 @@ function deletePost(e) {
   e.preventDefault();
 }
 
+// Fill form with content of edited post
 function enableEdit(e) {
   if (e.target.classList.contains('editBtn')) {
     const editedPostElem = e.target.parentElement.parentElement;
