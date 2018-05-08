@@ -8,6 +8,12 @@ ui.postBtn.addEventListener('click', submitPost);
 
 ui.posts.addEventListener('click', deletePost);
 
+ui.posts.addEventListener('click', enableEdit);
+
+ui.form.addEventListener('click', cancelEdit)
+
+
+
 function getPosts(url) {
   http.get('http://localhost:3000/posts')
     .then(data => ui.showPosts(data))
@@ -17,15 +23,32 @@ function getPosts(url) {
 function submitPost() {
   const newPost = {
     title: ui.titleInput.value,
-    body: ui.bodyInput.value
+    body: ui.bodyInput.value,
   }
 
-  http.post('http://localhost:3000/posts', newPost)
-    .then(data => {
-      getPosts();
-      ui.clearFormFields();
-    })
-    .catch(err => console.log(err));
+  if (newPost.title === '' || newPost.body === '') {
+    return;
+  } else {
+    if (ui.idInput.value === '') {
+      //Create post
+      http.post('http://localhost:3000/posts', newPost)
+        .then(data => {
+          getPosts();
+          ui.clearFormFields();
+        })
+        .catch(err => console.log(err));
+    } else {
+      // Update post
+      console.log(ui.idInput.value);
+      http.put(`http://localhost:3000/posts/${ui.idInput.value}`, newPost)
+      .then(data => {
+        ui.clearFormFields();
+        ui.changeFormState('add');
+        getPosts();
+      })
+      .catch(err => console.log(err));
+    }
+  }
 }
 
 function deletePost(e) {
@@ -41,5 +64,27 @@ function deletePost(e) {
         .catch(err => console.log(err));
     }
   }
+  e.preventDefault();
 }
 
+function enableEdit(e) {
+  if (e.target.classList.contains('editBtn')) {
+    const editedPostElem = e.target.parentElement.parentElement;
+    const data = {
+      id: editedPostElem.querySelector('[data-id]').dataset.id,
+      title: editedPostElem.querySelector('.card-title').textContent,
+      body: editedPostElem.querySelector('.card-text').textContent
+    }
+
+    ui.fillFormFields(data);
+  }
+
+  e.preventDefault();
+}
+
+function cancelEdit(e) {
+  if (e.target.classList.contains('cancelBtn')) {
+    ui.changeFormState('add');
+  }
+  e.preventDefault();
+}
